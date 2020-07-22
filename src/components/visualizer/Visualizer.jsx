@@ -22,6 +22,7 @@ const Visualizer = (props) => {
 	const [heights, setHeights] = useState([]);
 	const [sorted, setSorted] = useState([]);
 	const [playing, setPlaying] = useState(false);
+	const [sorting, setSorting] = useState(true);
 	const timeoutIds = useRef([]);
 	const trace = useRef([]);
 	const [step, setStep] = useState(0);
@@ -98,6 +99,17 @@ const Visualizer = (props) => {
 	const handlePause = () => {
 		clearTimeouts();
 		setPlaying(false);
+	};
+
+	const handleReplay = () => {
+		clearTimeouts();
+		setStep(0);
+		setComparing([]);
+		setSwapping([]);
+		setHeights([]);
+		setSorted([]);
+		setPlaying(true);
+		play(trace.current.slice(1));
 	};
 
 	const handleStepBackward = () => {
@@ -178,6 +190,11 @@ const Visualizer = (props) => {
 		if (algorithm) algorithm.run();
 	}, [algorithm]);
 
+	useEffect(() => {
+		if (step !== 0 && step === trace.current.length - 1) setSorting(false);
+		else setSorting(true);
+	}, [step]);
+
 	return (
 		<>
 			<h3>Sorting Algorithms</h3>
@@ -185,7 +202,7 @@ const Visualizer = (props) => {
 				{algorithm ? algorithm.name : 'Select an algorithm'}
 			</button>
 			<button style={{ float: 'right' }} className="glow">
-				{sorted.length === size ? 'Sorted' : 'Unsorted'}
+				{sorting ? 'Unsorted' : 'Sorted'}
 			</button>
 			<div className="ui-group">
 				<ProgressBar min={0} max={trace.current.length - 1} value={step} />
@@ -219,15 +236,11 @@ const Visualizer = (props) => {
 					</button>
 					<button
 						className="glow pink"
-						onClick={() => (playing ? handlePause() : handlePlay())}
+						onClick={() =>
+							playing ? handlePause() : sorting ? handlePlay() : handleReplay()
+						}
 					>
-						{playing ? (
-							<FaPause />
-						) : sorted.length === size ? (
-							<FaRedo />
-						) : (
-							<FaPlay />
-						)}
+						{playing ? <FaPause /> : sorting ? <FaPlay /> : <FaRedo />}
 					</button>
 					<button
 						className="glow pink"
