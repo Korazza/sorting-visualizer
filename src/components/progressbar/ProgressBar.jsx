@@ -1,18 +1,19 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProgressBar.scss';
 
-const ProgressBar = ({ min = 0, max = 0, value = 0 }) => {
-	const progress = useRef();
+const ProgressBar = ({ min = 0, max = 100, value = 1 }) => {
+	const [width, setWidth] = useState();
 
 	useEffect(() => {
-		if (progress.current)
-			progress.current.style.width = `${(100 / (max - min)) * (value - min)}%`;
-		console.log('min', min, 'max', max, 'value', value);
+		let percentage = (100 / (max - min)) * (value - min);
+		percentage
+			? setWidth(`${(100 / (max - min)) * (value - min)}%`)
+			: setWidth('0%');
 	}, [min, max, value]);
 
 	return (
 		<div className="progress-bar">
-			<div ref={progress} className="progress" />
+			<div style={{ width }} className="progress" />
 		</div>
 	);
 };

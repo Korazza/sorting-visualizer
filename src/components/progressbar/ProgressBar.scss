@@ -7,13 +7,29 @@ $purple2: #e100ff;
 	position: relative;
 	display: inline-block;
 	margin: 1em;
+	padding: 0 0.1em;
 	width: 65%;
-	height: 0.8em;
-	border: 3px solid transparent;
+	height: 1.2em;
+	border: 0.375em solid transparent;
 	border-radius: 1em;
-	background: rgba(255, 255, 255, 0.1);
+	background: rgba(255, 255, 255, 0.125);
 	outline: none;
 	user-select: none;
+}
+
+.progress-bar::after {
+	content: '';
+	position: absolute;
+	bottom: -4px;
+	left: 0%;
+	height: 105%;
+	width: 100%;
+	opacity: 0.8;
+	border-radius: 1em;
+	background: #000;
+	filter: blur(8px);
+	transition: all 0.2s;
+	z-index: -1;
 }
 
 .progress {
@@ -29,10 +45,10 @@ $purple2: #e100ff;
 	content: '';
 	position: absolute;
 	z-index: -1;
-	bottom: -5px;
-	left: 5%;
-	height: 110%;
-	width: 90%;
+	bottom: -4px;
+	left: 0%;
+	height: 105%;
+	width: 100%;
 	opacity: 0.8;
 	border-radius: 1em;
 	background: inherit;

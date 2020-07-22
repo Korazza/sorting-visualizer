@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
 	FaPlay,
 	FaPause,
+	FaRedo,
 	FaStepBackward,
 	FaStepForward,
 	FaUndo,
@@ -27,9 +28,6 @@ const Visualizer = (props) => {
 	const backward = useRef(false);
 
 	const resetArray = useCallback(() => {
-		setStep(0);
-		trace.current = resetTrace();
-		clearTimeouts();
 		let tmp = [];
 		for (let i = 0; i < size; i++) {
 			tmp.push(Math.floor(Math.random() * 0.68 * window.innerHeight) + 25);
@@ -40,6 +38,9 @@ const Visualizer = (props) => {
 		setSwapping([]);
 		setSorted([]);
 		setPlaying(false);
+		setStep(0);
+		trace.current = resetTrace();
+		clearTimeouts();
 	}, [size]);
 
 	useEffect(() => {
@@ -86,12 +87,11 @@ const Visualizer = (props) => {
 	};
 
 	const handlePlay = () => {
-		console.log('trace', trace.current);
 		backward.current = false;
 		if (sorted.length < size) {
 			setPlaying(true);
 			if (step === 0) play(trace.current.slice(1));
-			else play(trace.current.slice(step));
+			else play(trace.current.slice(step + 1));
 		}
 	};
 
@@ -190,7 +190,7 @@ const Visualizer = (props) => {
 			<div className="ui-group">
 				<ProgressBar min={0} max={trace.current.length - 1} value={step} />
 				<div>
-					<button className="glow orange" onClick={resetArray}>
+					<button className="glow orange" onClick={() => resetArray()}>
 						<FaUndo />
 					</button>
 					<button
@@ -221,7 +221,13 @@ const Visualizer = (props) => {
 						className="glow pink"
 						onClick={() => (playing ? handlePause() : handlePlay())}
 					>
-						{playing ? <FaPause /> : <FaPlay />}
+						{playing ? (
+							<FaPause />
+						) : sorted.length === size ? (
+							<FaRedo />
+						) : (
+							<FaPlay />
+						)}
 					</button>
 					<button
 						className="glow pink"

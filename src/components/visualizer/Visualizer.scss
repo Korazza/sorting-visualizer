@@ -67,16 +67,16 @@ h3 {
 .glow::after {
 	content: '';
 	position: absolute;
-	z-index: -1;
 	bottom: -5px;
-	left: 5%;
-	height: 110%;
-	width: 90%;
+	left: 0%;
+	height: 105%;
+	width: 100%;
 	opacity: 0.8;
 	border-radius: 1em;
 	background: inherit;
 	filter: blur(8px);
 	transition: all 0.2s;
+	z-index: -1;
 }
 
 .glow:hover::after {
