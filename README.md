@@ -1,4 +1,4 @@
-## Live demo
+## Live Demo
 
 https://korazza-sorting-visualizer.netlify.app/
 
