@@ -1,0 +1,41 @@
+$white1: #fff;
+$white2: #bbb;
+$purple1: #7f00ff;
+$purple2: #e100ff;
+
+.progress-bar {
+	position: relative;
+	display: inline-block;
+	margin: 1em;
+	width: 65%;
+	height: 0.8em;
+	border: 3px solid transparent;
+	border-radius: 1em;
+	background: rgba(255, 255, 255, 0.1);
+	outline: none;
+	user-select: none;
+}
+
+.progress {
+	position: relative;
+	height: 100%;
+	border-radius: 1em;
+	background: linear-gradient(to right, $purple1, $purple2);
+	outline: none;
+	user-select: none;
+}
+
+.progress::after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	bottom: -5px;
+	left: 5%;
+	height: 110%;
+	width: 90%;
+	opacity: 0.8;
+	border-radius: 1em;
+	background: inherit;
+	filter: blur(8px);
+	transition: all 0.2s;
+}

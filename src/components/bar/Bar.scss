@@ -1,0 +1,30 @@
+.bar {
+	display: flex;
+	margin: 0 3px;
+	background-color: #4285f4;
+	color: white;
+	border: none;
+	font-size: 0.95em;
+	font-weight: bold;
+	justify-content: center;
+	align-items: center;
+	transition-property: height, margin;
+	transition-duration: 150ms;
+	transition-timing-function: ease-in-out;
+}
+
+.bar.mx {
+	margin: 0 15px;
+}
+
+.bar.comparing {
+	background-color: #f4b400;
+}
+
+.bar.swapping {
+	background-color: #db4437;
+}
+
+.bar.sorted {
+	background-color: #0f9d58;
+}
