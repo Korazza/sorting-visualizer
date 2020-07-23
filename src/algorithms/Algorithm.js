@@ -1,4 +1,4 @@
-class SortingAlgorithm {
+class Algorithm {
 	constructor() {
 		this._trace = null;
 	}
@@ -8,4 +8,4 @@ class SortingAlgorithm {
 	}
 }
 
-export default SortingAlgorithm;
+export default Algorithm;
