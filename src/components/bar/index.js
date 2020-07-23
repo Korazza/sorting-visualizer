@@ -1,2 +1,1 @@
-import Bar from './Bar';
-export default Bar;
+export { default } from './Bar';
