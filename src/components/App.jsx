@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Visualizer from './visualizer/Visualizer';
+import Visualizer from './Visualizer';
 import './App.scss';
 
 const App = () => {
