@@ -1,30 +1,53 @@
-.bar {
+$bg-color: #efeeee;
+$border-color: #ffffff33;
+$light: #fff;
+$shadow: #d1cdc7;
+
+.wrapper {
+	position: relative;
 	display: flex;
-	margin: 0 3px;
+	margin: 0 8px;
+	align-items: flex-end;
+	height: 100%;
+	background-color: $bg-color;
+	border: 1px solid $border-color;
+	border-radius: 1em;
+	box-shadow: inset -3px -3px 8px $light, inset 3px 3px 8px $shadow;
+	transition: margin 150ms ease-in-out;
+	overflow: hidden;
+
+	&.mx {
+		margin: 0 15px;
+	}
+
+	&.sorted {
+		box-shadow: -6px -6px 16px $light, 6px 6px 16px $shadow;
+	}
+}
+
+.bar {
+	position: relative;
+	display: flex;
+	width: 100%;
 	background-color: #4285f4;
+	border: 0;
+	border-radius: 1em;
 	color: white;
-	border: none;
 	font-size: 0.95em;
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
-	transition-property: height, margin;
-	transition-duration: 150ms;
-	transition-timing-function: ease-in-out;
-}
+	transition: height 150ms ease-in-out;
 
-.bar.mx {
-	margin: 0 15px;
-}
+	&.comparing {
+		background-color: #f4b400;
+	}
 
-.bar.comparing {
-	background-color: #f4b400;
-}
+	&.swapping {
+		background-color: #db4437;
+	}
 
-.bar.swapping {
-	background-color: #db4437;
-}
-
-.bar.sorted {
-	background-color: #0f9d58;
+	&.sorted {
+		background-color: #0f9d58;
+	}
 }

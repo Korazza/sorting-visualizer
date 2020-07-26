@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
+$bg-color: #efeeee;
+$border-color: #ffffff33;
+$light: #fff;
+$shadow: #d1cdc7;
+
+html,
+body,
+#root {
+	width: 100vw;
+	height: 100vh;
+	user-select: none;
+	overflow: hidden;
+	background: #efeeee;
+}
+
+#root {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	place-items: center;
+}
+
+header {
+	margin: 2em 0;
+}
+
+.btn {
+	position: relative;
+	display: inline-flex;
+	margin: 1em;
+	padding: 0.4em 1.2em;
+	font-size: 1.1em;
+	letter-spacing: 1px;
+	text-align: center;
+	color: #555;
+	background-color: $bg-color;
+	border: 1px solid $border-color;
+	border-radius: 1em;
+	box-shadow: -6px -6px 16px $light, 6px 6px 16px $shadow;
+	outline: none;
+	cursor: pointer;
+
+	&:active {
+		box-shadow: inset -3px -3px 8px $light, inset 3px 3px 8px $shadow;
+	}
+}

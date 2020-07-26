@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './ProgressBar.scss';
 
 const ProgressBar = ({ min = 0, max = 100, value = 1 }) => {
-	const [width, setWidth] = useState();
+	const map = (s, a1, a2, b1, b2) => {
+		let mapped = b1 + ((s - a1) * (b2 - b1)) / (a2 - a1);
+		return mapped <= b2 ? (mapped >= b1 ? mapped : b1) : b2;
+	};
+
+	const [width, setWidth] = useState('');
 
 	useEffect(() => {
-		let percentage = (100 / (max - min)) * (value - min);
-		percentage
-			? setWidth(`${(100 / (max - min)) * (value - min)}%`)
-			: setWidth('0%');
+		let percentage = map(value, min, max, 0, 100);
+		setWidth(`${percentage}%`);
 	}, [min, max, value]);
 
 	return (

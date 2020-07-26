@@ -1,57 +1,32 @@
-$white1: #fff;
-$white2: #bbb;
-$purple1: #7f00ff;
-$purple2: #e100ff;
+$bg-color: #efeeee;
+$border-color: #ffffff33;
+$light: #fff;
+$shadow: #d1cdc7;
+
+$progress1: #7f00ff;
+$progress2: #e100ff;
 
 .progress-bar {
+	display: inline-flex;
 	position: relative;
-	display: inline-block;
-	margin: 1em;
-	padding: 0 0.1em;
-	width: 65%;
-	height: 1.2em;
-	border: 0.375em solid transparent;
+	padding: 6px;
+	width: 100%;
+	height: 1.8em;
+	background-color: $bg-color;
+	border: 1px solid $border-color;
 	border-radius: 1em;
-	background: rgba(255, 255, 255, 0.125);
+	box-shadow: -6px -6px 16px $light, 6px 6px 16px $shadow;
 	outline: none;
 	user-select: none;
-}
-
-.progress-bar::after {
-	content: '';
-	position: absolute;
-	bottom: -4px;
-	left: 0%;
-	height: 105%;
-	width: 100%;
-	opacity: 0.8;
-	border-radius: 1em;
-	background: #000;
-	filter: blur(8px);
-	transition: all 0.2s;
-	z-index: -1;
+	overflow: hidden;
 }
 
 .progress {
 	position: relative;
 	height: 100%;
 	border-radius: 1em;
-	background: linear-gradient(to right, $purple1, $purple2);
+	background: linear-gradient(to right, $progress1, $progress2);
 	outline: none;
 	user-select: none;
-}
-
-.progress::after {
-	content: '';
-	position: absolute;
-	z-index: -1;
-	bottom: -4px;
-	left: 0%;
-	height: 105%;
-	width: 100%;
-	opacity: 0.8;
-	border-radius: 1em;
-	background: inherit;
-	filter: blur(8px);
-	transition: all 0.2s;
+	transition: width 500ms ease;
 }

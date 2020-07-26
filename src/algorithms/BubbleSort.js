@@ -1,5 +1,5 @@
 import Algorithm from './Algorithm';
-import Trace from '../Trace';
+import Trace from './Trace';
 
 class BubbleSort extends Algorithm {
 	constructor() {

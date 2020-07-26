@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { BubbleSort, MergeSort, QuickSort } from '../../algorithms';
 import ProgressBar from '../ProgressBar';
 import Bar from '../Bar';
 import {
@@ -13,25 +12,30 @@ import {
 import './Visualizer.scss';
 
 const Visualizer = (props) => {
-	const { size, animationSpeed } = props;
+	const {
+		size,
+		animationSpeed,
+		algorithm,
+		playing,
+		sorting,
+		setPlaying,
+		setSorting,
+	} = props;
 
 	const [array, setArray] = useState([]);
-	const [algorithm, setAlgorithm] = useState();
 	const [comparing, setComparing] = useState([]);
 	const [swapping, setSwapping] = useState([]);
 	const [heights, setHeights] = useState([]);
 	const [sorted, setSorted] = useState([]);
-	const [playing, setPlaying] = useState(false);
-	const [sorting, setSorting] = useState(true);
-	const timeoutIds = useRef([]);
-	const frames = useRef([]);
+	const [frames, setFrames] = useState([]);
 	const [step, setStep] = useState(0);
+	const timeoutIds = useRef([]);
 	const backward = useRef(false);
 
 	const resetArray = useCallback(() => {
 		let tmp = [];
 		for (let i = 0; i < size; i++) {
-			tmp.push(Math.floor(Math.random() * 0.68 * window.innerHeight) + 25);
+			tmp.push(Math.floor(Math.random() * 100) + 15);
 		}
 		setArray(tmp);
 		setComparing([]);
@@ -40,11 +44,7 @@ const Visualizer = (props) => {
 		setPlaying(false);
 		setStep(0);
 		clearTimeouts();
-	}, [size]);
-
-	useEffect(() => {
-		resetArray();
-	}, [resetArray]);
+	}, [size, setPlaying]);
 
 	const resetFrames = () => {
 		setStep(0);
@@ -86,8 +86,8 @@ const Visualizer = (props) => {
 		backward.current = false;
 		if (sorted.length < size) {
 			setPlaying(true);
-			if (step === 0) play(frames.current.slice(1));
-			else play(frames.current.slice(step + 1));
+			if (step === 0) play(frames.slice(1));
+			else play(frames.slice(step + 1));
 		}
 	};
 
@@ -100,128 +100,90 @@ const Visualizer = (props) => {
 		clearTimeouts();
 		resetFrames();
 		setPlaying(true);
-		play(frames.current.slice(1));
+		play(frames.slice(1));
 	};
 
 	const handleStepBackward = () => {
 		if (step > 0) {
-			let animation = frames.current[step - 1];
+			let animation = frames[step - 1];
 			backward.current = true;
 			update(animation, -1);
 		}
 	};
 
 	const handleStepForward = () => {
-		if (step < frames.current.length - 1) {
-			let animation = frames.current[step + 1];
+		if (step < frames.length - 1) {
+			let animation = frames[step + 1];
 			backward.current = false;
 			update(animation, +1);
 		}
 	};
 
-	const handleAlgorithmChange = (newAlgorithm) => {
-		if (newAlgorithm.name !== algorithm.name && !playing) {
-			resetFrames();
-			setAlgorithm(newAlgorithm);
-		}
-	};
+	useEffect(() => {
+		resetArray();
+	}, [resetArray]);
 
 	useEffect(() => {
-		setAlgorithm(new BubbleSort());
-	}, []);
+		resetFrames();
+	}, [algorithm]);
 
 	useEffect(() => {
-		if (algorithm) frames.current = algorithm.run(array);
+		if (algorithm) setFrames(algorithm.run(array));
 	}, [algorithm, array]);
 
 	useEffect(() => {
-		if (step !== 0 && step === frames.current.length - 1) setSorting(false);
+		if (step !== 0 && step === frames.length - 1) setSorting(false);
 		else setSorting(true);
-	}, [step]);
+	}, [step, frames, setSorting]);
 
 	return (
-		<>
-			<h3>Sorting Algorithms</h3>
-			<button style={{ float: 'right' }} className="glow">
-				{algorithm ? algorithm.name : 'Select an algorithm'}
-			</button>
-			<button style={{ float: 'right' }} className="glow">
-				{sorting ? 'Unsorted' : 'Sorted'}
-			</button>
-			<div className="ui-group">
-				<ProgressBar min={0} max={frames.current.length - 1} value={step} />
-				<div>
-					<button className="glow orange" onClick={() => resetArray()}>
-						<FaUndo />
-					</button>
-					<button
-						className="glow purple"
-						onClick={() => handleAlgorithmChange(new BubbleSort())}
-					>
-						BubbleSort
-					</button>
-					<button
-						className="glow purple"
-						onClick={() => handleAlgorithmChange(new MergeSort())}
-					>
-						MergeSort
-					</button>
-					<button
-						className="glow purple"
-						onClick={() => handleAlgorithmChange(new QuickSort())}
-					>
-						QuickSort
-					</button>
-					<button
-						className="glow pink"
-						onClick={!playing ? handleStepBackward : null}
-					>
-						<FaStepBackward />
-					</button>
-					<button
-						className="glow pink"
-						onClick={() =>
-							playing ? handlePause() : sorting ? handlePlay() : handleReplay()
-						}
-					>
-						{playing ? <FaPause /> : sorting ? <FaPlay /> : <FaRedo />}
-					</button>
-					<button
-						className="glow pink"
-						onClick={!playing ? handleStepForward : null}
-					>
-						<FaStepForward />
-					</button>
-				</div>
+		<div className="visualizer">
+			<div className="bar-group">
+				{array.map((value, index) => {
+					let width = window.innerWidth / (2 * size);
+					let height =
+						step !== 0
+							? heights.includes(index) &&
+							  heights[heights.findIndex((el) => el === index) + 1][
+									backward.current ? 'oldHeight' : 'newHeight'
+							  ]
+							: value;
+					let comparingState = comparing.includes(index);
+					let swappingState = swapping.includes(index);
+					let sortedState = sorted.includes(index);
+					return (
+						<Bar
+							key={index}
+							width={width}
+							height={height}
+							comparing={comparingState}
+							swapping={swappingState}
+							sorted={sortedState}
+						/>
+					);
+				})}
 			</div>
 			<div className="container">
-				<div className="bar-group">
-					{array.map((value, index) => {
-						let width = (1300 - 2 * size) / size;
-						let height =
-							step !== 0
-								? heights.includes(index) &&
-								  heights[heights.findIndex((el) => el === index) + 1][
-										backward.current ? 'oldHeight' : 'newHeight'
-								  ]
-								: value;
-						let comparingState = comparing.includes(index);
-						let swappingState = swapping.includes(index);
-						let sortedState = sorted.includes(index);
-						return (
-							<Bar
-								key={index}
-								width={width}
-								height={height}
-								comparing={comparingState}
-								swapping={swappingState}
-								sorted={sortedState}
-							/>
-						);
-					})}
-				</div>
+				<ProgressBar min={0} max={frames.length - 1} value={step} />
+				<button className="btn" onClick={() => resetArray()}>
+					<FaUndo />
+				</button>
+				<button className="btn" onClick={!playing ? handleStepBackward : null}>
+					<FaStepBackward />
+				</button>
+				<button
+					className="btn"
+					onClick={() =>
+						playing ? handlePause() : sorting ? handlePlay() : handleReplay()
+					}
+				>
+					{playing ? <FaPause /> : sorting ? <FaPlay /> : <FaRedo />}
+				</button>
+				<button className="btn" onClick={!playing ? handleStepForward : null}>
+					<FaStepForward />
+				</button>
 			</div>
-		</>
+		</div>
 	);
 };
 
