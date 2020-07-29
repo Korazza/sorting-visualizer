@@ -27,8 +27,11 @@ const App = () => {
 
 	useEffect(() => {
 		reset();
-		setAlgorithm(new BubbleSort());
 	}, [reset]);
+
+	useEffect(() => {
+		setAlgorithm(new BubbleSort());
+	}, []);
 
 	const getRandom = (min, max) => {
 		min = Math.ceil(min);
