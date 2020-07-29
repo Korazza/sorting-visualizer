@@ -2,23 +2,24 @@ $bg-color: #efeeee;
 $border-color: #ffffff33;
 $light: #fff;
 $shadow: #d1cdc7;
+$bar-bg: linear-gradient(125deg, #31ffde 0%, #5451ff 100%);
+$bar-comparing-bg: linear-gradient(125deg, #fde62d 0%, #ff8a00 100%);
+$bar-swapping-bg: linear-gradient(125deg, #ff61dc 0%, #e82727 78%);
+$bar-sorted-bg: linear-gradient(125deg, #7ee8fa 0%, #2bb700d3 78%);
 
-.wrapper {
+.bar-wrapper {
 	position: relative;
 	display: flex;
-	margin: 0 8px;
+	margin: 0 3px;
 	align-items: flex-end;
+	min-width: 8px;
+	max-width: 160px;
 	height: 100%;
 	background-color: $bg-color;
 	border: 1px solid $border-color;
 	border-radius: 1em;
 	box-shadow: inset -3px -3px 8px $light, inset 3px 3px 8px $shadow;
-	transition: margin 150ms ease-in-out;
 	overflow: hidden;
-
-	&.mx {
-		margin: 0 15px;
-	}
 
 	&.sorted {
 		box-shadow: -6px -6px 16px $light, 6px 6px 16px $shadow;
@@ -29,7 +30,7 @@ $shadow: #d1cdc7;
 	position: relative;
 	display: flex;
 	width: 100%;
-	background-color: #4285f4;
+	background: $bar-bg;
 	border: 0;
 	border-radius: 1em;
 	color: white;
@@ -37,17 +38,18 @@ $shadow: #d1cdc7;
 	font-weight: bold;
 	justify-content: center;
 	align-items: center;
-	transition: height 150ms ease-in-out;
+	flex: 0 1 auto;
+	transition: height 150ms ease-in;
 
 	&.comparing {
-		background-color: #f4b400;
+		background: $bar-comparing-bg;
 	}
 
 	&.swapping {
-		background-color: #db4437;
+		background: $bar-swapping-bg;
 	}
 
 	&.sorted {
-		background-color: #0f9d58;
+		background: $bar-sorted-bg;
 	}
 }

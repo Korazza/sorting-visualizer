@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Visualizer from '../Visualizer';
 import { BubbleSort, MergeSort, QuickSort } from '../../algorithms';
+import { FaUndo } from 'react-icons/fa';
 import './App.scss';
 
 const App = () => {
-	const [size, setSize] = useState(5);
+	const [array, setArray] = useState([]);
+	const [size, setSize] = useState(10);
 	const [algorithm, setAlgorithm] = useState();
 	const [playing, setPlaying] = useState(false);
 	const [sorting, setSorting] = useState(true);
@@ -15,23 +17,41 @@ const App = () => {
 		}
 	};
 
+	const reset = useCallback(() => {
+		let tmp = [];
+		for (let i = 0; i < size; i++) {
+			tmp.push(getRandom(5, 100));
+		}
+		setArray(tmp);
+	}, [size]);
+
 	useEffect(() => {
+		reset();
 		setAlgorithm(new BubbleSort());
-	}, []);
+	}, [reset]);
+
+	const getRandom = (min, max) => {
+		min = Math.ceil(min);
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
 
 	return (
 		<>
 			<header>
-				<input
-					className="slider"
-					type="range"
-					min={5}
-					max={50}
-					value={size}
-					onChange={(e) => setSize(e.target.value)}
-				/>
-				<button className="btn">
-					{algorithm ? algorithm.name : 'Select an algorithm'}
+				{window.innerWidth > 468 && (
+					<input
+						className="slider"
+						type="range"
+						min={5}
+						max={130}
+						value={size}
+						onChange={(e) => setSize(e.target.value)}
+					/>
+				)}
+				<button className="btn" onClick={() => reset()}>
+					Reset
+					<FaUndo size={'1.15em'} style={{ marginLeft: '0.8em' }} />
 				</button>
 				<button className="btn">{sorting ? 'Unsorted' : 'Sorted'}</button>
 				<button
@@ -54,13 +74,12 @@ const App = () => {
 				</button>
 			</header>
 			<Visualizer
+				array={array}
 				size={size}
 				animationSpeed={100 / (size * 0.02)}
 				algorithm={algorithm}
-				playing={playing}
-				sorting={sorting}
-				setPlaying={setPlaying}
-				setSorting={setSorting}
+				playingProp={[playing, setPlaying]}
+				sortingProp={[sorting, setSorting]}
 			/>
 		</>
 	);

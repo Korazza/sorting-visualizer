@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ProgressBar from '../ProgressBar';
 import Bar from '../Bar';
 import {
@@ -7,22 +7,22 @@ import {
 	FaRedo,
 	FaStepBackward,
 	FaStepForward,
-	FaUndo,
 } from 'react-icons/fa';
 import './Visualizer.scss';
 
 const Visualizer = (props) => {
 	const {
+		array,
 		size,
 		animationSpeed,
 		algorithm,
-		playing,
-		sorting,
-		setPlaying,
-		setSorting,
+		playingProp,
+		sortingProp,
 	} = props;
 
-	const [array, setArray] = useState([]);
+	const [playing, setPlaying] = playingProp;
+	const [sorting, setSorting] = sortingProp;
+
 	const [comparing, setComparing] = useState([]);
 	const [swapping, setSwapping] = useState([]);
 	const [heights, setHeights] = useState([]);
@@ -31,20 +31,6 @@ const Visualizer = (props) => {
 	const [step, setStep] = useState(0);
 	const timeoutIds = useRef([]);
 	const backward = useRef(false);
-
-	const resetArray = useCallback(() => {
-		let tmp = [];
-		for (let i = 0; i < size; i++) {
-			tmp.push(Math.floor(Math.random() * 100) + 15);
-		}
-		setArray(tmp);
-		setComparing([]);
-		setSwapping([]);
-		setSorted([]);
-		setPlaying(false);
-		setStep(0);
-		clearTimeouts();
-	}, [size, setPlaying]);
 
 	const resetFrames = () => {
 		setStep(0);
@@ -99,8 +85,8 @@ const Visualizer = (props) => {
 	const handleReplay = () => {
 		clearTimeouts();
 		resetFrames();
-		setPlaying(true);
 		play(frames.slice(1));
+		setPlaying(true);
 	};
 
 	const handleStepBackward = () => {
@@ -120,8 +106,13 @@ const Visualizer = (props) => {
 	};
 
 	useEffect(() => {
-		resetArray();
-	}, [resetArray]);
+		setComparing([]);
+		setSwapping([]);
+		setSorted([]);
+		setPlaying(false);
+		setStep(0);
+		clearTimeouts();
+	}, [array, size, setPlaying]);
 
 	useEffect(() => {
 		resetFrames();
@@ -137,10 +128,10 @@ const Visualizer = (props) => {
 	}, [step, frames, setSorting]);
 
 	return (
-		<div className="visualizer">
+		<>
 			<div className="bar-group">
 				{array.map((value, index) => {
-					let width = window.innerWidth / (2 * size);
+					let width = window.innerWidth / (size * 40);
 					let height =
 						step !== 0
 							? heights.includes(index) &&
@@ -165,11 +156,8 @@ const Visualizer = (props) => {
 			</div>
 			<div className="container">
 				<ProgressBar min={0} max={frames.length - 1} value={step} />
-				<button className="btn" onClick={() => resetArray()}>
-					<FaUndo />
-				</button>
 				<button className="btn" onClick={!playing ? handleStepBackward : null}>
-					<FaStepBackward />
+					<FaStepBackward size={'1.15em'} />
 				</button>
 				<button
 					className="btn"
@@ -177,13 +165,19 @@ const Visualizer = (props) => {
 						playing ? handlePause() : sorting ? handlePlay() : handleReplay()
 					}
 				>
-					{playing ? <FaPause /> : sorting ? <FaPlay /> : <FaRedo />}
+					{playing ? (
+						<FaPause size={'1.15em'} />
+					) : sorting ? (
+						<FaPlay size={'1.15em'} />
+					) : (
+						<FaRedo size={'1.15em'} />
+					)}
 				</button>
 				<button className="btn" onClick={!playing ? handleStepForward : null}>
-					<FaStepForward />
+					<FaStepForward size={'1.15em'} />
 				</button>
 			</div>
-		</div>
+		</>
 	);
 };
 

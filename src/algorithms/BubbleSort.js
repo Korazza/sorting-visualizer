@@ -7,20 +7,18 @@ class BubbleSort extends Algorithm {
 		this._name = 'BubbleSort';
 	}
 
-	run(array) {
-		const sortingArray = array.slice();
-		this._trace = new Trace();
-		for (let i = 0; i < sortingArray.length; i++) {
-			for (let j = 0; j < sortingArray.length - 1 - i; j++) {
+	sort(array) {
+		for (let i = 0; i < array.length; i++) {
+			for (let j = 0; j < array.length - 1 - i; j++) {
 				this._trace.frames.push({
 					comparingFrame: [j, j + 1],
 					swappingFrame: [],
 					heightFrame: [],
 					sortedFrame: this._trace.lastSortedFrame,
 				});
-				if (sortingArray[j] > sortingArray[j + 1]) {
-					let value1 = sortingArray[j + 1];
-					let value2 = sortingArray[j];
+				if (array[j] > array[j + 1]) {
+					let value1 = array[j + 1];
+					let value2 = array[j];
 					this._trace.frames.push({
 						comparingFrame: [],
 						swappingFrame: [j, j + 1],
@@ -32,21 +30,21 @@ class BubbleSort extends Algorithm {
 						],
 						sortedFrame: this._trace.lastSortedFrame,
 					});
-					let tmp = sortingArray[j];
-					sortingArray[j] = sortingArray[j + 1];
-					sortingArray[j + 1] = tmp;
+					this.swap(array, j, j + 1);
 				}
 			}
 			this._trace.frames.push({
 				comparingFrame: [],
 				swappingFrame: [],
 				heightFrame: [],
-				sortedFrame: [
-					...this._trace.lastSortedFrame,
-					sortingArray.length - 1 - i,
-				],
+				sortedFrame: [...this._trace.lastSortedFrame, array.length - 1 - i],
 			});
 		}
+	}
+
+	run(array) {
+		this._trace = new Trace();
+		this.sort(array.slice());
 		return this._trace.frames;
 	}
 }

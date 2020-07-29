@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import './Bar.scss';
 
 const Bar = ({ width, height, comparing, swapping, sorted }) => {
-	const [wrapperClassName, setWrapperClassName] = useState('');
 	const [barClassName, setBarClassName] = useState('');
 	const [wrapperStyle, setWrapperStyle] = useState();
 	const [barStyle, setBarStyle] = useState();
@@ -10,10 +9,11 @@ const Bar = ({ width, height, comparing, swapping, sorted }) => {
 	const div = useRef();
 
 	useEffect(() => {
-		let widthStyle = `${width}px`;
+		let marginStyle = `0 ${width * 1.5}px`;
+		let widthStyle = `${width}%`;
 		if (height) {
 			let heightStyle = `${height}%`;
-			setWrapperStyle({ width: widthStyle });
+			setWrapperStyle({ margin: marginStyle, width: widthStyle });
 			setBarStyle({
 				height: heightStyle,
 			});
@@ -25,23 +25,18 @@ const Bar = ({ width, height, comparing, swapping, sorted }) => {
 	}, [content, height]);
 
 	useEffect(() => {
-		let wrapperClasses = '';
 		let barClasses = '';
-		if ((comparing || swapping) && width >= 30) wrapperClasses += ' mx';
 		if (comparing) barClasses += ' comparing';
 		if (swapping) barClasses += ' swapping';
-		if (sorted) {
-			wrapperClasses += ' sorted';
-			barClasses += ' sorted';
-		}
-		setWrapperClassName(wrapperClasses);
+		if (sorted) barClasses += ' sorted';
+
 		setBarClassName(barClasses);
 	}, [width, comparing, swapping, sorted]);
 
 	return (
-		<div style={wrapperStyle} className={'wrapper' + wrapperClassName}>
+		<div style={wrapperStyle} className={'bar-wrapper'}>
 			<div ref={div} style={barStyle} className={'bar' + barClassName}>
-				{width >= 30 && content}
+				{width >= 1.3 && content}
 			</div>
 		</div>
 	);
