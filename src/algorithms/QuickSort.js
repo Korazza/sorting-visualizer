@@ -10,10 +10,6 @@ class QuickSort extends Algorithm {
 	partition(array, start, end) {
 		let pivotValue = array[start];
 		let pivotIndex = start;
-		this._trace.frames.push({
-			purpleFrame: [pivotIndex],
-			sortedFrame: this._trace.lastSortedFrame,
-		});
 		for (let i = start + 1; i <= end; i++) {
 			if (i !== pivotIndex)
 				this._trace.frames.push({
