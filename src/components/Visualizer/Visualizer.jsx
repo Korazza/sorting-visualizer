@@ -37,6 +37,7 @@ const Visualizer = (props) => {
 		setStep(0);
 		setYellow([]);
 		setRed([]);
+		setPurple([]);
 		setHeights([]);
 		setSorted([]);
 	};
@@ -117,6 +118,7 @@ const Visualizer = (props) => {
 	useEffect(() => {
 		setYellow([]);
 		setRed([]);
+		setPurple([]);
 		setSorted([]);
 		setPlaying(false);
 		setStep(0);
