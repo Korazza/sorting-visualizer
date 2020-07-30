@@ -9,17 +9,21 @@ class QuickSort extends Algorithm {
 
 	partition(array, start, end) {
 		let pivot = start;
+		this._trace.frames.push({
+			purpleFrame: [pivot],
+			sortedFrame: this._trace.lastSortedFrame,
+		});
 		for (let i = start; i < end; i++) {
-			this._trace.frames.push({
-				comparingFrame: [pivot, i],
-				swappingFrame: [],
-				heightFrame: [],
-				sortedFrame: this._trace.lastSortedFrame,
-			});
+			if (i !== start)
+				this._trace.frames.push({
+					yellowFrame: [i],
+					purpleFrame: [pivot],
+					sortedFrame: this._trace.lastSortedFrame,
+				});
 			if (array[i] < array[end]) {
 				this._trace.frames.push({
-					comparingFrame: [],
-					swappingFrame: [pivot, i],
+					redFrame: [i],
+					purpleFrame: [pivot],
 					heightFrame: [
 						pivot,
 						{ newHeight: array[i], oldHeight: array[pivot] },
@@ -32,17 +36,18 @@ class QuickSort extends Algorithm {
 				pivot++;
 			}
 		}
-		this._trace.frames.push({
-			comparingFrame: [],
-			swappingFrame: [pivot, end],
-			heightFrame: [
-				pivot,
-				{ newHeight: array[end], oldHeight: array[pivot] },
-				end,
-				{ newHeight: array[pivot], oldHeight: array[end] },
-			],
-			sortedFrame: this._trace.lastSortedFrame,
-		});
+		if (start !== end)
+			this._trace.frames.push({
+				redFrame: [end],
+				purpleFrame: [pivot],
+				heightFrame: [
+					pivot,
+					{ newHeight: array[end], oldHeight: array[pivot] },
+					end,
+					{ newHeight: array[pivot], oldHeight: array[end] },
+				],
+				sortedFrame: this._trace.lastSortedFrame,
+			});
 		this.swap(array, pivot, end);
 		return pivot;
 	}
@@ -51,9 +56,6 @@ class QuickSort extends Algorithm {
 		if (start > end) return;
 		let index = this.partition(array, start, end);
 		this._trace.frames.push({
-			comparingFrame: [],
-			swappingFrame: [],
-			heightFrame: [],
 			sortedFrame: [...this._trace.lastSortedFrame, index],
 		});
 		this.sort(array, start, index - 1);
@@ -63,9 +65,7 @@ class QuickSort extends Algorithm {
 	run(array) {
 		let tmp = array.slice();
 		this._trace = new Trace();
-		console.log('initial', tmp);
 		this.sort(tmp, 0, tmp.length - 1);
-		console.log('sorted', tmp);
 		return this._trace.frames;
 	}
 }

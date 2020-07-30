@@ -1,11 +1,12 @@
-$bg-color: #efeeee;
+$wrapper-bg: #efeeee;
 $border-color: #ffffff33;
 $light: #fff;
 $shadow: #d1cdc7;
-$bar-bg: linear-gradient(125deg, #31ffde 0%, #5451ff 100%);
-$bar-comparing-bg: linear-gradient(125deg, #fde62d 0%, #ff8a00 100%);
-$bar-swapping-bg: linear-gradient(125deg, #ff61dc 0%, #e82727 78%);
-$bar-sorted-bg: linear-gradient(125deg, #7ee8fa 0%, #2bb700d3 78%);
+$bg: linear-gradient(125deg, #31beff 0%, #5451ff 100%);
+$bg-yellow: linear-gradient(125deg, #fde62d 0%, #ff8a00 100%);
+$bg-red: linear-gradient(125deg, #ff61dc 0%, #e82727 78%);
+$bg-purple: linear-gradient(125deg, #d261ff 0%, #8b27e8 78%);
+$bg-sorted: linear-gradient(125deg, #7ee8fa 0%, #2bb700d3 78%);
 
 .bar-wrapper {
 	position: relative;
@@ -15,7 +16,7 @@ $bar-sorted-bg: linear-gradient(125deg, #7ee8fa 0%, #2bb700d3 78%);
 	min-width: 8px;
 	max-width: 160px;
 	height: 100%;
-	background-color: $bg-color;
+	background-color: $wrapper-bg;
 	border: 1px solid $border-color;
 	border-radius: 1em;
 	box-shadow: inset -3px -3px 8px $light, inset 3px 3px 8px $shadow;
@@ -30,7 +31,7 @@ $bar-sorted-bg: linear-gradient(125deg, #7ee8fa 0%, #2bb700d3 78%);
 	position: relative;
 	display: flex;
 	width: 100%;
-	background: $bar-bg;
+	background: $bg;
 	border: 0;
 	border-radius: 1em;
 	color: white;
@@ -41,15 +42,19 @@ $bar-sorted-bg: linear-gradient(125deg, #7ee8fa 0%, #2bb700d3 78%);
 	flex: 0 1 auto;
 	transition: height 150ms ease-in;
 
-	&.comparing {
-		background: $bar-comparing-bg;
+	&.yellow {
+		background: $bg-yellow;
 	}
 
-	&.swapping {
-		background: $bar-swapping-bg;
+	&.red {
+		background: $bg-red;
+	}
+
+	&.purple {
+		background: $bg-purple;
 	}
 
 	&.sorted {
-		background: $bar-sorted-bg;
+		background: $bg-sorted;
 	}
 }

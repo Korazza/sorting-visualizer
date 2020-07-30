@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Bar.scss';
 
-const Bar = ({ width, height, comparing, swapping, sorted }) => {
+const Bar = ({ width, height, yellow, red, purple, sorted }) => {
 	const [barClassName, setBarClassName] = useState('');
 	const [wrapperStyle, setWrapperStyle] = useState();
 	const [barStyle, setBarStyle] = useState();
@@ -25,13 +25,13 @@ const Bar = ({ width, height, comparing, swapping, sorted }) => {
 	}, [content, height]);
 
 	useEffect(() => {
-		let barClasses = '';
-		if (comparing) barClasses += ' comparing';
-		if (swapping) barClasses += ' swapping';
-		if (sorted) barClasses += ' sorted';
-
+		let barClasses = ' ';
+		if (yellow) barClasses += 'yellow';
+		else if (red) barClasses += 'red';
+		else if (purple) barClasses += 'purple';
+		else if (sorted) barClasses += 'sorted';
 		setBarClassName(barClasses);
-	}, [width, comparing, swapping, sorted]);
+	}, [width, yellow, red, purple, sorted]);
 
 	return (
 		<div style={wrapperStyle} className={'bar-wrapper'}>

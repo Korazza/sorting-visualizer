@@ -11,17 +11,14 @@ class BubbleSort extends Algorithm {
 		for (let i = 0; i < array.length; i++) {
 			for (let j = 0; j < array.length - 1 - i; j++) {
 				this._trace.frames.push({
-					comparingFrame: [j, j + 1],
-					swappingFrame: [],
-					heightFrame: [],
+					yellowFrame: [j, j + 1],
 					sortedFrame: this._trace.lastSortedFrame,
 				});
 				if (array[j] > array[j + 1]) {
 					let value1 = array[j + 1];
 					let value2 = array[j];
 					this._trace.frames.push({
-						comparingFrame: [],
-						swappingFrame: [j, j + 1],
+						redFrame: [j, j + 1],
 						heightFrame: [
 							j,
 							{ newHeight: value1, oldHeight: value2 },
@@ -34,9 +31,6 @@ class BubbleSort extends Algorithm {
 				}
 			}
 			this._trace.frames.push({
-				comparingFrame: [],
-				swappingFrame: [],
-				heightFrame: [],
 				sortedFrame: [...this._trace.lastSortedFrame, array.length - 1 - i],
 			});
 		}

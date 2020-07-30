@@ -23,8 +23,9 @@ const Visualizer = (props) => {
 	const [playing, setPlaying] = playingProp;
 	const [sorting, setSorting] = sortingProp;
 
-	const [comparing, setComparing] = useState([]);
-	const [swapping, setSwapping] = useState([]);
+	const [yellow, setYellow] = useState([]);
+	const [red, setRed] = useState([]);
+	const [purple, setPurple] = useState([]);
 	const [heights, setHeights] = useState([]);
 	const [sorted, setSorted] = useState([]);
 	const [frames, setFrames] = useState([]);
@@ -34,18 +35,25 @@ const Visualizer = (props) => {
 
 	const resetFrames = () => {
 		setStep(0);
-		setComparing([]);
-		setSwapping([]);
+		setYellow([]);
+		setRed([]);
 		setHeights([]);
 		setSorted([]);
 	};
 
 	const update = (
-		{ comparingFrame, swappingFrame, heightFrame, sortedFrame },
+		{
+			yellowFrame = [],
+			redFrame = [],
+			purpleFrame = [],
+			heightFrame = [],
+			sortedFrame = [],
+		},
 		step
 	) => {
-		setComparing(comparingFrame);
-		setSwapping(swappingFrame);
+		setYellow(yellowFrame);
+		setRed(redFrame);
+		setPurple(purpleFrame);
 		setHeights(heightFrame);
 		setSorted(sortedFrame);
 		setStep((prevStep) => prevStep + step);
@@ -98,6 +106,7 @@ const Visualizer = (props) => {
 	};
 
 	const handleStepForward = () => {
+		console.log(frames[step + 1]);
 		if (step < frames.length - 1) {
 			let animation = frames[step + 1];
 			backward.current = false;
@@ -106,8 +115,8 @@ const Visualizer = (props) => {
 	};
 
 	useEffect(() => {
-		setComparing([]);
-		setSwapping([]);
+		setYellow([]);
+		setRed([]);
 		setSorted([]);
 		setPlaying(false);
 		setStep(0);
@@ -139,16 +148,18 @@ const Visualizer = (props) => {
 									backward.current ? 'oldHeight' : 'newHeight'
 							  ]
 							: value;
-					let comparingState = comparing.includes(index);
-					let swappingState = swapping.includes(index);
+					let yellowState = yellow.includes(index);
+					let redState = red.includes(index);
+					let purpleState = purple.includes(index);
 					let sortedState = sorted.includes(index);
 					return (
 						<Bar
 							key={index}
 							width={width}
 							height={height}
-							comparing={comparingState}
-							swapping={swappingState}
+							yellow={yellowState}
+							red={redState}
+							purple={purpleState}
 							sorted={sortedState}
 						/>
 					);
