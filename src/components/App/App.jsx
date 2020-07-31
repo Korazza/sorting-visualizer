@@ -52,7 +52,7 @@ const App = () => {
 						onChange={(e) => setSize(e.target.value)}
 					/>
 				)}
-				<button className="btn" onClick={() => reset()}>
+				<button className="btn" onClick={reset}>
 					Reset
 					<FaUndo size={'1.15em'} style={{ marginLeft: '0.8em' }} />
 				</button>

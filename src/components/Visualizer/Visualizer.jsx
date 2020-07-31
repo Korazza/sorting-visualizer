@@ -174,8 +174,8 @@ const Visualizer = (props) => {
 				</button>
 				<button
 					className="btn"
-					onClick={() =>
-						playing ? handlePause() : sorting ? handlePlay() : handleReplay()
+					onClick={
+						playing ? handlePause : sorting ? handlePlay : handleReplay
 					}
 				>
 					{playing ? (
