@@ -1,5 +1,4 @@
 import Algorithm from './Algorithm';
-import Trace from './Trace';
 
 class BubbleSort extends Algorithm {
 	constructor() {
@@ -34,12 +33,6 @@ class BubbleSort extends Algorithm {
 				sortedFrame: [...this._trace.lastSortedFrame, array.length - 1 - i],
 			});
 		}
-	}
-
-	run(array) {
-		this._trace = new Trace();
-		this.sort(array.slice());
-		return this._trace.frames;
 	}
 }
 

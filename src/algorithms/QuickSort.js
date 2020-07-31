@@ -1,5 +1,4 @@
 import Algorithm from './Algorithm';
-import Trace from './Trace';
 
 class QuickSort extends Algorithm {
 	constructor() {
@@ -11,6 +10,10 @@ class QuickSort extends Algorithm {
 		console.log(array, start, end);
 		let pivotValue = array[start];
 		let pivotIndex = start;
+		this._trace.frames.push({
+			purpleFrame: [pivotIndex],
+			sortedFrame: this._trace.lastSortedFrame,
+		});
 		for (let i = start + 1; i <= end; i++) {
 			this._trace.frames.push({
 				yellowFrame: [i],
@@ -63,13 +66,6 @@ class QuickSort extends Algorithm {
 		});
 		this.sort(array, start, index - 1);
 		this.sort(array, index + 1, end);
-	}
-
-	run(array) {
-		let tmp = array.slice();
-		this._trace = new Trace();
-		this.sort(tmp, 0, tmp.length - 1);
-		return this._trace.frames;
 	}
 }
 

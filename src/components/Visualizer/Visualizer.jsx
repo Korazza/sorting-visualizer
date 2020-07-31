@@ -107,7 +107,6 @@ const Visualizer = (props) => {
 	};
 
 	const handleStepForward = () => {
-		console.log(frames[step + 1]);
 		if (step < frames.length - 1) {
 			let animation = frames[step + 1];
 			backward.current = false;
@@ -174,9 +173,7 @@ const Visualizer = (props) => {
 				</button>
 				<button
 					className="btn"
-					onClick={
-						playing ? handlePause : sorting ? handlePlay : handleReplay
-					}
+					onClick={playing ? handlePause : sorting ? handlePlay : handleReplay}
 				>
 					{playing ? (
 						<FaPause size={'1.15em'} />

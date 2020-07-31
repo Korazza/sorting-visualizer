@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Visualizer from '../Visualizer';
-import { BubbleSort, MergeSort, QuickSort } from '../../algorithms';
+import {
+	BubbleSort,
+	InsertionSort,
+	MergeSort,
+	QuickSort,
+} from '../../algorithms';
 import { FaUndo } from 'react-icons/fa';
 import './App.scss';
 
@@ -47,7 +52,7 @@ const App = () => {
 						className="slider"
 						type="range"
 						min={5}
-						max={200}
+						max={100}
 						value={size}
 						onChange={(e) => setSize(e.target.value)}
 					/>
@@ -62,6 +67,12 @@ const App = () => {
 					onClick={() => handleAlgorithmChange(new BubbleSort())}
 				>
 					BubbleSort
+				</button>
+				<button
+					className="btn"
+					onClick={() => handleAlgorithmChange(new InsertionSort())}
+				>
+					InsertionSort
 				</button>
 				<button
 					className="btn"
