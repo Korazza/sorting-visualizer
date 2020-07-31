@@ -11,44 +11,36 @@ class QuickSort extends Algorithm {
 		let pivotValue = array[start];
 		let pivotIndex = start;
 		this._trace.frames.push({
+			arrayFrame: [...array],
 			purpleFrame: [pivotIndex],
 			sortedFrame: this._trace.lastSortedFrame,
 		});
 		for (let i = start + 1; i <= end; i++) {
 			this._trace.frames.push({
+				arrayFrame: [...array],
 				yellowFrame: [i],
 				purpleFrame: [pivotIndex],
 				sortedFrame: this._trace.lastSortedFrame,
 			});
 			if (array[i] < pivotValue) {
 				pivotIndex++;
+				this.swap(array, i, pivotIndex);
 				this._trace.frames.push({
+					arrayFrame: [...array],
 					redFrame: [i],
 					purpleFrame: [pivotIndex],
-					heightFrame: [
-						i,
-						{ newHeight: array[pivotIndex], oldHeight: array[i] },
-						pivotIndex,
-						{ newHeight: array[i], oldHeight: array[pivotIndex] },
-					],
 					sortedFrame: this._trace.lastSortedFrame,
 				});
-				this.swap(array, i, pivotIndex);
 			}
 		}
+		this.swap(array, start, pivotIndex);
 		if (pivotIndex !== start)
 			this._trace.frames.push({
+				arrayFrame: [...array],
 				redFrame: [start],
 				purpleFrame: [pivotIndex],
-				heightFrame: [
-					start,
-					{ newHeight: array[pivotIndex], oldHeight: array[start] },
-					pivotIndex,
-					{ newHeight: array[start], oldHeight: array[pivotIndex] },
-				],
 				sortedFrame: this._trace.lastSortedFrame,
 			});
-		this.swap(array, start, pivotIndex);
 		return pivotIndex;
 	}
 
@@ -56,12 +48,14 @@ class QuickSort extends Algorithm {
 		if (start >= end) {
 			if (start === end)
 				this._trace.frames.push({
+					arrayFrame: [...array],
 					sortedFrame: [...this._trace.lastSortedFrame, start],
 				});
 			return;
 		}
 		let index = this.partition(array, start, end);
 		this._trace.frames.push({
+			arrayFrame: [...array],
 			sortedFrame: [...this._trace.lastSortedFrame, index],
 		});
 		this.sort(array, start, index - 1);

@@ -10,36 +10,36 @@ class InsertionSort extends Algorithm {
 		for (let i = 1; i < array.length; ++i) {
 			let insert = array[i];
 			this._trace.frames.push({
+				arrayFrame: [...array],
 				purpleFrame: [i],
 				sortedFrame: this._trace.lastSortedFrame,
 			});
 			let j = i - 1;
 			for (; j >= 0 && array[j] > insert; --j) {
 				this._trace.frames.push({
+					arrayFrame: [...array],
 					yellowFrame: [j],
 					purpleFrame: [i],
 					sortedFrame: this._trace.lastSortedFrame,
 				});
+				array[j + 1] = array[j];
 				this._trace.frames.push({
+					arrayFrame: [...array],
 					redFrame: [j + 1],
 					purpleFrame: [i],
-					heightFrame: [
-						j + 1,
-						{ newHeight: array[j], oldHeight: array[j + 1] },
-					],
 					sortedFrame: this._trace.lastSortedFrame,
 				});
-				array[j + 1] = array[j];
 			}
+			array[j + 1] = insert;
 			this._trace.frames.push({
+				arrayFrame: [...array],
 				redFrame: [j + 1],
 				purpleFrame: [i],
-				heightFrame: [j + 1, { newHeight: insert, oldHeight: array[j + 1] }],
 				sortedFrame: this._trace.lastSortedFrame,
 			});
-			array[j + 1] = insert;
 		}
 		this._trace.frames.push({
+			arrayFrame: [...array],
 			sortedFrame: [...array.map((_, i) => i)],
 		});
 	}

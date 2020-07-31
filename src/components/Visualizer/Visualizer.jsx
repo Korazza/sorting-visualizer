@@ -7,8 +7,11 @@ import {
 	FaRedo,
 	FaStepBackward,
 	FaStepForward,
+	FaFastBackward,
+	FaFastForward,
 } from 'react-icons/fa';
 import './Visualizer.scss';
+import { useCallback } from 'react';
 
 const Visualizer = (props) => {
 	const {
@@ -23,40 +26,40 @@ const Visualizer = (props) => {
 	const [playing, setPlaying] = playingProp;
 	const [sorting, setSorting] = sortingProp;
 
-	const [yellow, setYellow] = useState([]);
-	const [red, setRed] = useState([]);
-	const [purple, setPurple] = useState([]);
-	const [heights, setHeights] = useState([]);
-	const [sorted, setSorted] = useState([]);
+	const [arrayFrame, setArrayFrame] = useState([]);
+	const [yellowFrame, setYellowFrame] = useState([]);
+	const [redFrame, setRedFrame] = useState([]);
+	const [purpleFrame, setPurpleFrame] = useState([]);
+	const [sortedFrame, setSortedFrame] = useState([]);
 	const [frames, setFrames] = useState([]);
 	const [step, setStep] = useState(0);
 	const timeoutIds = useRef([]);
 	const backward = useRef(false);
 
-	const resetFrames = () => {
+	const resetFrames = useCallback(() => {
 		setStep(0);
-		setYellow([]);
-		setRed([]);
-		setPurple([]);
-		setHeights([]);
-		setSorted([]);
-	};
+		setArrayFrame([...array]);
+		setYellowFrame([]);
+		setRedFrame([]);
+		setPurpleFrame([]);
+		setSortedFrame([]);
+	}, [array]);
 
 	const update = (
 		{
+			arrayFrame = [],
 			yellowFrame = [],
 			redFrame = [],
 			purpleFrame = [],
-			heightFrame = [],
 			sortedFrame = [],
 		},
 		step
 	) => {
-		setYellow(yellowFrame);
-		setRed(redFrame);
-		setPurple(purpleFrame);
-		setHeights(heightFrame);
-		setSorted(sortedFrame);
+		setArrayFrame(arrayFrame);
+		setYellowFrame(yellowFrame);
+		setRedFrame(redFrame);
+		setPurpleFrame(purpleFrame);
+		setSortedFrame(sortedFrame);
 		setStep((prevStep) => prevStep + step);
 	};
 
@@ -79,7 +82,7 @@ const Visualizer = (props) => {
 
 	const handlePlay = () => {
 		backward.current = false;
-		if (sorted.length < size) {
+		if (sortedFrame.length < size) {
 			setPlaying(true);
 			if (step === 0) play(frames.slice(1));
 			else play(frames.slice(step + 1));
@@ -114,11 +117,22 @@ const Visualizer = (props) => {
 		}
 	};
 
+	const handleBackward = () => {
+		let animation = frames[0];
+		update(animation, -step);
+	};
+
+	const handleForward = () => {
+		let animation = frames[frames.length - 1];
+		update(animation, frames.length - 1 - step);
+	};
+
 	useEffect(() => {
-		setYellow([]);
-		setRed([]);
-		setPurple([]);
-		setSorted([]);
+		setArrayFrame([]);
+		setYellowFrame([]);
+		setRedFrame([]);
+		setPurpleFrame([]);
+		setSortedFrame([]);
 		setPlaying(false);
 		setStep(0);
 		clearTimeouts();
@@ -126,7 +140,7 @@ const Visualizer = (props) => {
 
 	useEffect(() => {
 		resetFrames();
-	}, [algorithm]);
+	}, [algorithm, resetFrames]);
 
 	useEffect(() => {
 		if (algorithm) setFrames(algorithm.run(array));
@@ -140,19 +154,12 @@ const Visualizer = (props) => {
 	return (
 		<>
 			<div className="bar-group">
-				{array.map((value, index) => {
+				{(arrayFrame.length > 0 ? arrayFrame : array).map((height, index) => {
 					let width = window.innerWidth / (size * 40);
-					let height =
-						step !== 0
-							? heights.includes(index) &&
-							  heights[heights.findIndex((el) => el === index) + 1][
-									backward.current ? 'oldHeight' : 'newHeight'
-							  ]
-							: value;
-					let yellowState = yellow.includes(index);
-					let redState = red.includes(index);
-					let purpleState = purple.includes(index);
-					let sortedState = sorted.includes(index);
+					let yellowState = yellowFrame.includes(index);
+					let redState = redFrame.includes(index);
+					let purpleState = purpleFrame.includes(index);
+					let sortedState = sortedFrame.includes(index);
 					return (
 						<Bar
 							key={index}
@@ -168,6 +175,9 @@ const Visualizer = (props) => {
 			</div>
 			<div className="container">
 				<ProgressBar min={0} max={frames.length - 1} value={step} />
+				<button className="btn" onClick={!playing ? handleBackward : null}>
+					<FaFastBackward size={'1.15em'} />
+				</button>
 				<button className="btn" onClick={!playing ? handleStepBackward : null}>
 					<FaStepBackward size={'1.15em'} />
 				</button>
@@ -185,6 +195,9 @@ const Visualizer = (props) => {
 				</button>
 				<button className="btn" onClick={!playing ? handleStepForward : null}>
 					<FaStepForward size={'1.15em'} />
+				</button>
+				<button className="btn" onClick={!playing ? handleForward : null}>
+					<FaFastForward size={'1.15em'} />
 				</button>
 			</div>
 		</>

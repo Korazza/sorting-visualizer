@@ -21,6 +21,7 @@ class Algorithm {
 		this.sort(tmpArray, 0, tmpArray.length - 1);
 		if (this._trace.lastSortedFrame.length < array.length)
 			this._trace.frames.push({
+				arrayFrame: [...tmpArray],
 				sortedFrame: [...array.map((_, i) => i)],
 			});
 		return this._trace.frames;

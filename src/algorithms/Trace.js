@@ -2,10 +2,10 @@ class Trace {
 	constructor() {
 		this._frames = [
 			{
+				arrayFrame: [],
 				yellowFrame: [],
 				redFrame: [],
 				purpleFrame: [],
-				heightFrame: [],
 				sortedFrame: [],
 			},
 		];

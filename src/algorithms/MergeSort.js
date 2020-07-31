@@ -18,21 +18,19 @@ class MergeSort extends Algorithm {
 		while (left <= mid) tmpArray[index++] = array[left++];
 		while (right <= end) tmpArray[index++] = array[right++];
 		for (let k = 0; k < n; k++) {
+			array[start + k] = tmpArray[k];
 			this._trace.frames.push({
+				arrayFrame: [...array],
 				redFrame: [start + k],
-				heightFrame: [
-					start + k,
-					{ newHeight: tmpArray[k], oldHeight: array[start + k] },
-				],
 				sortedFrame: this._trace.lastSortedFrame,
 			});
-			array[start + k] = tmpArray[k];
 		}
 	}
 
 	sort(array, start = 0, end = array.length - 1) {
 		if (start < end) {
 			this._trace.frames.push({
+				arrayFrame: [...array],
 				yellowFrame: [...array.slice(start, end + 1).map((_, i) => i + start)],
 				sortedFrame: this._trace.lastSortedFrame,
 			});
