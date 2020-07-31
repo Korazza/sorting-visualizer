@@ -6,14 +6,14 @@ $bg: linear-gradient(125deg, #31beff 0%, #5451ff 100%);
 $bg-yellow: linear-gradient(125deg, #fde62d 0%, #ff8a00 100%);
 $bg-red: linear-gradient(125deg, #ff61dc 0%, #e82727 78%);
 $bg-purple: linear-gradient(125deg, #d261ff 0%, #8b27e8 78%);
-$bg-sorted: linear-gradient(125deg, #7ee8fa 0%, #2bb700d3 78%);
+$bg-sorted: linear-gradient(125deg, #7efa88 0%, #2bb700d3 78%);
 
 .bar-wrapper {
 	position: relative;
 	display: flex;
 	margin: 0 3px;
 	align-items: flex-end;
-	min-width: 8px;
+	min-width: 6px;
 	max-width: 160px;
 	height: 100%;
 	background-color: $wrapper-bg;

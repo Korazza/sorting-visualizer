@@ -52,7 +52,7 @@ const App = () => {
 						className="slider"
 						type="range"
 						min={5}
-						max={100}
+						max={180}
 						value={size}
 						onChange={(e) => setSize(e.target.value)}
 					/>
