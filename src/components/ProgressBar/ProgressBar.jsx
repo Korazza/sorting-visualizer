@@ -16,7 +16,7 @@ const ProgressBar = ({ min = 0, max = 100, value = 1 }) => {
 
 	return (
 		<div className="progress-bar">
-			<div style={{ width }} className="progress" />
+			<div style={{ width }} className="progress-line" />
 		</div>
 	);
 };

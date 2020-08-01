@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ProgressBar from '../ProgressBar';
 import Bar from '../Bar';
+import ProgressTime from '../ProgressTime';
+import ProgressBar from '../ProgressBar';
 import {
 	FaPlay,
 	FaPause,
@@ -174,7 +175,14 @@ const Visualizer = (props) => {
 				})}
 			</div>
 			<div className="container">
-				<ProgressBar min={0} max={frames.length - 1} value={step} />
+				<div className="progress">
+					<ProgressTime
+						playing={playing}
+						step={(animationSpeed / 1000) * step}
+						duration={(animationSpeed / 1000) * (frames.length - 1)}
+					/>
+					<ProgressBar min={0} max={frames.length - 1} value={step} />
+				</div>
 				<button className="btn" onClick={!playing ? handleBackward : null}>
 					<FaFastBackward size={'1.15em'} />
 				</button>

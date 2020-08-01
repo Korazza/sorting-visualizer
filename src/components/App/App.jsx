@@ -90,7 +90,7 @@ const App = () => {
 			<Visualizer
 				array={array}
 				size={size}
-				animationSpeed={100 / (size * 0.02)}
+				animationSpeed={100 / (size * 0.015)}
 				algorithm={algorithm}
 				playingProp={[playing, setPlaying]}
 				sortingProp={[sorting, setSorting]}

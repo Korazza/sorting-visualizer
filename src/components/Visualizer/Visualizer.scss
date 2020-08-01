@@ -21,3 +21,10 @@
 		flex: 0 1 inherit;
 	}
 }
+
+.progress {
+	display: inline-flex;
+	position: relative;
+	width: 100%;
+	justify-content: space-around;
+}

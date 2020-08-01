@@ -10,21 +10,21 @@ $progress2: #e100ff;
 	display: inline-flex;
 	position: relative;
 	padding: 6px;
-	width: 100%;
+	width: 85%;
 	min-width: 400px;
-	height: 1.8em;
+	height: 90%;
+	align-items: center;
 	background-color: $bg-color;
 	border: 1px solid $border-color;
 	border-radius: 1em;
 	box-shadow: -6px -6px 16px $light, 6px 6px 16px $shadow;
-	outline: none;
 	user-select: none;
 	overflow: hidden;
 }
 
-.progress {
+.progress-line {
 	position: relative;
-	height: 100%;
+	height: 75%;
 	border-radius: 1em;
 	background: linear-gradient(to right, $progress1, $progress2);
 	outline: none;
