@@ -1,6 +1,6 @@
 ## Netlify Deploy
 
-[[Live Demo]](https://korazza-sorting-visualizer.netlify.app/)
+[[Live Demo]](https://look-sorting.netlify.app/)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9500168a-038a-4800-9167-6a32fed16ba5/deploy-status)](https://app.netlify.com/sites/korazza-sorting-visualizer/deploys)
 
