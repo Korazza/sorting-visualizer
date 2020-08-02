@@ -1,12 +1,10 @@
-$bg-color: #efeeee;
-$border-color: #ffffff33;
-$light: #fff;
-$shadow: #d1cdc7;
+@import '../../neu';
 
 $progress1: #7f00ff;
 $progress2: #e100ff;
 
 .progress-bar {
+	@include neu();
 	display: inline-flex;
 	position: relative;
 	padding: 6px;
@@ -14,10 +12,7 @@ $progress2: #e100ff;
 	min-width: 400px;
 	height: 90%;
 	align-items: center;
-	background-color: $bg-color;
-	border: 1px solid $border-color;
 	border-radius: 1em;
-	box-shadow: -6px -6px 16px $light, 6px 6px 16px $shadow;
 	user-select: none;
 	overflow: hidden;
 }
