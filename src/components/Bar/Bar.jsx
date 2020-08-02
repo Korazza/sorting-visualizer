@@ -10,7 +10,9 @@ const Bar = ({ width, height, yellow, red, purple, sorted }) => {
 	const div = useRef();
 
 	useEffect(() => {
-		let marginStyle = `0 ${width * 1.5}px`;
+		let marginStyle = `0 ${
+			(width * 1.5) % 2 === 0 ? width * 2 : width * 2 + 1
+		}px`;
 		let widthStyle = `${width}%`;
 		if (height) {
 			let heightStyle = `${height}%`;
