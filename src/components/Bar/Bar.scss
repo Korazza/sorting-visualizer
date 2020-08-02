@@ -6,9 +6,9 @@ $bg-red: linear-gradient(125deg, #ff61dc 0%, #e82727 78%);
 $bg-purple: linear-gradient(125deg, #d261ff 0%, #8b27e8 78%);
 $bg-sorted: linear-gradient(125deg, #65e770 0%, #2bb700d3 78%);
 
-$hoffset: -2px;
-$voffset: -2px;
-$blur: 8px;
+$hoffset: -3px;
+$voffset: -3px;
+$blur: 6px;
 
 .bar-wrapper {
 	position: relative;
@@ -19,8 +19,8 @@ $blur: 8px;
 	max-width: 160px;
 	height: 100%;
 	border-radius: 1em;
-	box-shadow: inset $hoffset $voffset $blur $light,
-		inset (-1 * $hoffset) (-1 * $voffset) $blur $shadow, 0 0 0 $light,
+	box-shadow: inset ($hoffset / 2) ($voffset / 2) ($blur / 2) $light,
+		inset (-1 * ($hoffset / 2)) (-1 * ($voffset / 2)) ($blur / 2) $shadow, 0 0 0 $light,
 		0 0 0 $shadow;
 	overflow: hidden;
 	transition: box-shadow 150ms ease;
