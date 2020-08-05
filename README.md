@@ -1,4 +1,4 @@
-## Netlify Deploy
+## Demo
 
 [[Live Demo]](https://look-sorting.netlify.app/)
 
